@@ -9,6 +9,7 @@ import streamlit.components.v1 as components
 
 st.markdown("<h1 style='text-align: center; color: black;'>Iltalenkki</h1>", unsafe_allow_html=True) 
 
+# df = pd.read_csv('Accelerometer.csv')
 df = pd.read_csv('https://raw.githubusercontent.com/EemeliJ/Fysiikan-projekti---Eemeli-Jalonen/main/Accelerometer.csv')
 
 # Z KOMPONENTTI JA SUODATUS
@@ -105,19 +106,20 @@ st.write('Askelmäärä Fourier-analyysin perusteella:', np.floor(step_count_fro
 # KARTTA
 st.markdown("<h2 style='text-align: center; color: black;'>Reitti kartalla</h2>", unsafe_allow_html=True)
 
+# df_location = pd.read_csv('Location.csv')
 df_location = pd.read_csv('https://raw.githubusercontent.com/EemeliJ/Fysiikan-projekti---Eemeli-Jalonen/main/Location.csv')
 
-df.columns = df.columns.str.strip()
+df_location.columns = df_location.columns.str.strip()
 
-lat_mean = df['Latitude (°)'].mean()
-long_mean = df['Longitude (°)'].mean()
+lat_mean = df_location['Latitude (°)'].mean()
+long_mean = df_location['Longitude (°)'].mean()
 
 my_map = folium.Map(location=[lat_mean, long_mean], zoom_start=14)
 
 start_time = 10
-mask = df['Time (s)'] >= start_time
+mask = df_location['Time (s)'] >= start_time
 
-folium.PolyLine(df.loc[mask, ['Latitude (°)', 'Longitude (°)']], color='purple', opacity=1).add_to(my_map)
+folium.PolyLine(df_location.loc[mask, ['Latitude (°)', 'Longitude (°)']], color='purple', opacity=1).add_to(my_map)
 
 map_file = 'map.html'
 my_map.save(map_file)
@@ -129,10 +131,10 @@ components.html(map_html, height=600)
 
 # KESKIMÄÄRÄINEN NOPEUS (m/s) ASKELPITUUS (cm) JA MATKA
 
-df['Distance (m)'] = np.sqrt((df['Latitude (°)'].diff() * 111320)**2 + (df['Longitude (°)'].diff() * 111320 * np.cos(np.radians(df['Latitude (°)']))**2)**2)
+df_location['Distance (m)'] = np.sqrt((df_location['Latitude (°)'].diff() * 111320)**2 + df_location['Longitude (°)'].diff() * 111320 * np.cos(np.radians(df_location['Latitude (°)']))**2)**2)
 
-total_distance = df['Distance (m)'].sum()
-total_time = df['Time (s)'].iloc[-1] - df['Time (s)'].iloc[0]
+total_distance = df_location['Distance (m)'].sum()
+total_time = df_location['Time (s)'].iloc[-1] - df_location['Time (s)'].iloc[0]
 
 average_speed = total_distance / total_time if total_time > 0 else 0
 
