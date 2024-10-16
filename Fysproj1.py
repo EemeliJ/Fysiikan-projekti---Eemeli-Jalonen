@@ -9,7 +9,7 @@ import streamlit.components.v1 as components
 
 st.markdown("<h1 style='text-align: center; color: black;'>Iltalenkki</h1>", unsafe_allow_html=True) 
 
-df = pd.read_csv('Accelerometer.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/EemeliJ/Fysiikan-projekti---Eemeli-Jalonen/main/Accelerometer.csv')
 
 # Z KOMPONENTTI JA SUODATUS
 st.markdown("<h2 style='text-align: center; color: black;'>Suodatettu Z-komponentti</h2>", unsafe_allow_html=True)
@@ -105,7 +105,7 @@ st.write('Askelmäärä Fourier-analyysin perusteella:', np.floor(step_count_fro
 # KARTTA
 st.markdown("<h2 style='text-align: center; color: black;'>Reitti kartalla</h2>", unsafe_allow_html=True)
 
-df = pd.read_csv('Location.csv')
+df_location = pd.read_csv('https://raw.githubusercontent.com/EemeliJ/Fysiikan-projekti---Eemeli-Jalonen/main/Location.csv')
 
 df.columns = df.columns.str.strip()
 
