@@ -131,7 +131,7 @@ components.html(map_html, height=600)
 
 # KESKIMÄÄRÄINEN NOPEUS (m/s) ASKELPITUUS (cm) JA MATKA
 
-df_location['Distance (m)'] = np.sqrt((df_location['Latitude (°)'].diff() * 111320)**2 + df_location['Longitude (°)'].diff() * 111320 * np.cos(np.radians(df_location['Latitude (°)']))**2)**2)
+df_location['Distance (m)'] = np.sqrt((df_location['Latitude (°)'].diff() * 111320)**2 + df_location['Longitude (°)'].diff() * 111320 * np.cos(np.radians(df_location['Latitude (°)']))**2)**2
 
 total_distance = df_location['Distance (m)'].sum()
 total_time = df_location['Time (s)'].iloc[-1] - df_location['Time (s)'].iloc[0]
